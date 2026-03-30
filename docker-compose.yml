@@ -1,0 +1,24 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2.0
+    container_name: mosquitto-bustracker
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./docker/mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    restart: always
+
+  db:
+    image: postgres:15
+    container_name: postgres-bustracker
+    environment:
+      POSTGRES_DB: bustracker_db
+      POSTGRES_USER: bustracker_user
+      POSTGRES_PASSWORD: bustracker_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:  
